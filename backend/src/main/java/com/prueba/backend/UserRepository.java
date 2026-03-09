@@ -3,8 +3,11 @@ package com.prueba.backend;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.UUID;
+import java.util.Optional;
 
-@Repository
 public interface UserRepository extends JpaRepository<User, UUID> {
-    // Esto ya incluye save(), findAll(), findById(), deleteById() [cite: 49]
+    // Spring genera el "SELECT COUNT(*) > 0 FROM users WHERE email = ?" automáticamente
+    boolean existsByEmail(String email);
+    
+    Optional<User> findByEmail(String email);
 }

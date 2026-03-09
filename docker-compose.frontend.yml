@@ -1,0 +1,13 @@
+services:
+  frontend:
+    build:
+      context: ./frontend  # Le dice a Docker que el proyecto está aquí
+      dockerfile: DockerFile # Busca el archivo dentro de ./frontend
+    ports:
+      - "5173:80"
+    networks:
+      - frontend_net
+
+networks:
+  frontend_net:
+    driver: bridge
