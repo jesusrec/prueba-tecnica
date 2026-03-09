@@ -30,36 +30,27 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String username = null;
         String jwt = null;
 
-        // 1. CLÁUSULA DE GUARDA: Si no hay token o es inválido/undefined, ignoramos y seguimos
         if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ") || authorizationHeader.contains("undefined")) {
             chain.doFilter(request, response);
             return;
         }
-
         try {
             jwt = authorizationHeader.substring(7);
-            username = jwtUtil.extractEmail(jwt); // Aquí es donde antes saltaba la excepción
+            username = jwtUtil.extractEmail(jwt); 
         } catch (JwtException | IllegalArgumentException e) {
-            // Si el token está mal formado, logueamos el error pero NO detenemos la ejecución
             logger.warn("Token JWT inválido o mal formado recibido: " + e.getMessage());
         }
 
-        // 2. Si logramos extraer el username y no hay una autenticación previa
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            
-            // 3. Validamos que el token sea correcto para ese usuario
             if (jwtUtil.validateToken(jwt, username)) {
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                         username, null, new ArrayList<>());
                 
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                
-                // 4. Establecer la autenticación en el contexto de seguridad
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
         }
         
-        // Continuar con la cadena de filtros
         chain.doFilter(request, response);
     }
 }

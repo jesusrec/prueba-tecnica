@@ -9,10 +9,9 @@ const Register = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      // Endpoint público en el Backend
       await axios.post("https://cuddly-goggles-j4r7xxvq6q9fp44j-8080.app.github.dev/users", form);
       alert("¡Registro exitoso! Ahora puedes iniciar sesión.");
-      navigate("/"); // Redirección al Login
+      navigate("/"); 
     } catch (err) {
       alert("Error: El correo ya existe o el servidor no responde.");
     }

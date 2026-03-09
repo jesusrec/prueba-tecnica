@@ -7,14 +7,12 @@ public class UserDTO {
     private String name;
     private String email;
 
-    // Constructor para convertir de Entidad a DTO fácilmente
     public UserDTO(UUID id, String name, String email) {
         this.id = id;
         this.name = name;
         this.email = email;
     }
 
-    // Getters y Setters
     public UUID getId() { return id; }
     public void setId(UUID id) { this.id = id; }
     public String getName() { return name; }

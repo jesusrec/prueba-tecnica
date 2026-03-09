@@ -6,8 +6,6 @@ const UserList = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  
-  // Estado inicial usando 'name' según tu requerimiento
   const [form, setForm] = useState({ id: null, name: "", email: "", password: "" });
   const [isEditing, setIsEditing] = useState(false);
 
@@ -28,7 +26,7 @@ const UserList = () => {
     fetchUsers();
   }, []);
 
-  // VALIDACIONES BÁSICAS
+
   const validateForm = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (form.name.trim().length < 3) return "El nombre debe tener al menos 3 caracteres.";
@@ -90,8 +88,6 @@ const UserList = () => {
           <h2 style={styles.title}>Panel Central</h2>
           <button onClick={handleLogout} style={styles.btnLogout}>CERRAR SESIÓN</button>
         </div>
-
-        {/* FORMULARIO DE REGISTRO / EDICIÓN */}
         <div style={styles.card}>
           <h3 style={styles.cardTitle}>{isEditing ? "MODIFICAR REGISTRO" : "NUEVO USUARIO"}</h3>
           <form onSubmit={handleSubmit} style={styles.formGrid}>
@@ -133,8 +129,6 @@ const UserList = () => {
             </div>
           </form>
         </div>
-
-        {/* TABLA DE RESULTADOS */}
         <div style={styles.tableCard}>
           {loading ? (
             <p style={styles.statusText}>Actualizando base de datos...</p>
@@ -162,8 +156,6 @@ const UserList = () => {
             </table>
           )}
         </div>
-
-        {/* SECCIÓN API EXTERNA */}
         <ExternalJoke />
 
       </div>
@@ -174,21 +166,21 @@ const UserList = () => {
 const styles = {
 container: {
     minHeight: "100vh",
-    width: "100vw", // Asegura que use todo el ancho de la ventana
+    width: "100vw", 
     backgroundColor: "#000",
     color: "#fff",
     display: "flex",
     justifyContent: "center", 
-    padding: "60px 0", // Quitamos padding lateral para que no comprima el wrapper
+    padding: "60px 0", 
     boxSizing: "border-box",
   },
   centeredWrapper: {
-    width: "90%", // Usa el 90% del ancho de la pantalla
-    maxWidth: "1200px", // Un límite más amplio para monitores grandes, pero puedes quitarlo si quieres 100% real
+    width: "90%", 
+    maxWidth: "1200px", 
     display: "flex",
     flexDirection: "column",
     gap: "25px",
-    margin: "0 auto", // Margen automático a los lados para centrar perfectamente
+    margin: "0 auto", 
   },
   topBar: { 
     display: "flex", 

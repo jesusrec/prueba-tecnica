@@ -11,7 +11,7 @@ const Login = () => {
     try {
       const res = await api.post("/auth/login", credentials);
       localStorage.setItem("token", res.data.token);
-      navigate("/users"); // Dashboard
+      navigate("/users"); 
     } catch (err) {
       alert("Credenciales incorrectas.");
     }

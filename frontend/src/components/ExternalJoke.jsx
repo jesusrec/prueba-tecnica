@@ -10,7 +10,6 @@ const ExternalJoke = () => {
     setLoading(true);
     setError(null);
     try {
-      // Llamada al endpoint /external/joke de tu backend Java
       const response = await api.get('/external/joke');
       setJoke(response.data.value); 
     } catch (err) {
@@ -23,8 +22,6 @@ const ExternalJoke = () => {
   return (
     <div style={styles.jokeContainer}>
       <h3 style={styles.jokeTitle}>API Externa: Chuck Norris Facts</h3>
-      
-      {/* Botón para obtener el chiste */}
       <button 
         onClick={fetchJoke} 
         disabled={loading} 
@@ -32,8 +29,6 @@ const ExternalJoke = () => {
       >
         {loading ? 'BUSCANDO...' : 'OBTENER CHISTE'}
       </button>
-
-      {/* Manejo de Loading, Error y Visualización de Texto */}
       <div style={styles.resultArea}>
         {loading && <p style={styles.statusText}>Conectando con el servidor...</p>}
         {error && <p style={styles.errorText}>{error}</p>}

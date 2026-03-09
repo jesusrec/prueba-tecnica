@@ -15,10 +15,8 @@ import java.util.function.Function;
 @Component
 public class JwtUtil {
 
-    // Llave secreta para firmar los tokens (En producción esto va en variables de entorno)
-    private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
-    // Tiempo de expiración: 10 horas
+    private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     private final long EXPIRATION_TIME = 1000 * 60 * 60 * 10;
 
     public String generateToken(String email) {

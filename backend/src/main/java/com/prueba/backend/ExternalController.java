@@ -13,6 +13,6 @@ public class ExternalController {
         RestTemplate restTemplate = new RestTemplate();
         String url = "https://api.chucknorris.io/jokes/random";
         Map<String, Object> response = restTemplate.getForObject(url, Map.class);
-        return Map.of("value", (String) response.get("value")); // Retorna solo el valor [cite: 21, 23]
+        return Map.of("value", (String) response.get("value")); 
     }
 }

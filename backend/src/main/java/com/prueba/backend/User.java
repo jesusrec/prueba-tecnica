@@ -23,7 +23,6 @@ public class User {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    // Getters y Setters Manuales (Para evitar errores de compilación en Codespaces)
     public UUID getId() { return id; }
     public void setId(UUID id) { this.id = id; }
     public String getName() { return name; }

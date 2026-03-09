@@ -7,17 +7,10 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* Ruta principal: Login */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-
-        {/* Ruta protegida por token (el componente UserList debe manejar la carga) */}
         <Route path="/users" element={<UserList />} />
-
-        {/* Redirección: Si entras a "/", te manda a "/login" */}
         <Route path="/" element={<Navigate to="/login" />} />
-
-        {/* Catch-all: Cualquier ruta no definida redirige al login */}
         <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
     </Router>

@@ -27,7 +27,6 @@ public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    // 1. LISTAR TODOS LOS USUARIOS
     @GetMapping
     @Operation(summary = "Listar todos los usuarios", description = "Retorna una lista de usuarios registrados utilizando UserDTO para ocultar datos sensibles.")
     public List<UserDTO> getAllUsers() {
@@ -36,14 +35,12 @@ public class UserController {
                 .collect(Collectors.toList());
     }
 
-    // 2. CREAR USUARIO (Con Encriptación de Contraseña)
     @PostMapping
     @Operation(summary = "Registrar nuevo usuario", description = "Crea un usuario en el sistema. Verifica que el email no esté duplicado y encripta la contraseña.")
     @ApiResponse(responseCode = "201", description = "Usuario creado exitosamente")
     @ApiResponse(responseCode = "400", description = "El correo ya se encuentra registrado")
     public ResponseEntity<?> createUser(@RequestBody User user) {
         if (userRepository.existsByEmail(user.getEmail())) {
-            // Lanzamos la excepción y el GlobalExceptionHandler se encarga del resto
             throw new IllegalArgumentException("El correo " + user.getEmail() + " ya está registrado.");
         }
 
@@ -54,7 +51,6 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    // 3. OBTENER UN USUARIO POR ID (UUID)
     @GetMapping("/{id}")
     @Operation(summary = "Obtener usuario por ID", description = "Busca un usuario específico por su UUID y lo devuelve en formato DTO.")
     @ApiResponse(responseCode = "200", description = "Usuario encontrado")
@@ -65,7 +61,6 @@ public class UserController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // 4. ACTUALIZAR USUARIO
     @PutMapping("/{id}")
     @Operation(summary = "Actualizar usuario", description = "Actualiza los datos de un usuario existente. Si se envía password, esta se vuelve a encriptar.")
     @ApiResponse(responseCode = "200", description = "Usuario actualizado correctamente")
@@ -84,7 +79,6 @@ public class UserController {
         }).orElse(ResponseEntity.notFound().build());
     }
 
-    // 5. ELIMINAR USUARIO
     @DeleteMapping("/{id}")
     @Operation(summary = "Eliminar usuario", description = "Borra permanentemente un usuario de la base de datos por su ID.")
     @ApiResponse(responseCode = "204", description = "Usuario eliminado con éxito")
