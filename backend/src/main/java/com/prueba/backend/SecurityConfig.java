@@ -43,6 +43,7 @@ public class SecurityConfig {
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
                 .anyRequest().authenticated()
             );
+
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
@@ -56,7 +57,8 @@ public class SecurityConfig {
                 "http://localhost:5173",          
                 "http://127.0.0.1:5173",         
                 "https://*.github.dev",          
-                "https://*-5173.app.github.dev"  
+                "https://*-5173.app.github.dev" 
+        ));
         
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept", "X-Requested-With"));
