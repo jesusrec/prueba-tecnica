@@ -40,6 +40,18 @@ docker build -t prueba-tecnica-frontend:latest ./frontend
 
 docker stack deploy -c docker-compose.yml app_stack
 
+# Acceso a la Aplicación
+
+​Una vez que el stack esté desplegado y los servicios se encuentren en estado Running, puede acceder a la plataforma a través de las siguientes URLs:
+
+- ​Frontend (SPA): http://localhost (Puerto 80)
+
+- ​Backend API: http://localhost:8080
+
+- ​Documentación Swagger: http://localhost:8080/swagger-ui/index.html
+
+​Nota sobre el puerto 80: La aplicación frontend es servida mediante Nginx, por lo que no es necesario especificar un puerto en el navegador para acceder a la interfaz de usuario.
+
 # Pruebas en Entorno de Desarrollo (Local)
 
 ​Si desea ejecutar o depurar los servicios de forma individual fuera de Swarm:
