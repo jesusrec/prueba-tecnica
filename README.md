@@ -27,16 +27,16 @@
 
 ​Para ejecutar el ecosistema completo bajo orquestación, siga estos pasos desde la raíz del proyecto: 
 
-1.- Inicializar el Clúster (si no está activo):
+- Inicializar el Clúster (si no está activo):
   
 docker swarm init
 
-2.- Construir las Imágenes de los Microservicios:
+- Construir las Imágenes de los Microservicios:
 
 docker build -t prueba-tecnica-backend:latest ./backend
 docker build -t prueba-tecnica-frontend:latest ./frontend
 
-3.- Desplegar el Stack Completo:
+- Desplegar el Stack Completo:
 
 docker stack deploy -c docker-compose.yml app_stack
 
@@ -66,16 +66,16 @@ docker stack deploy -c docker-compose.yml app_stack
 
 ​Pasos para Ejecución Local:
 
-1.- Levantar Base de Datos (Docker):
+- Levantar Base de Datos (Docker):
 
 docker run --name pg-local -e POSTGRES_PASSWORD=password -p 5432:5432 -d postgres:15-alpine
 
-2.- Ejecutar Backend:
+- Ejecutar Backend:
 
 cd backend
 ./mvnw spring-boot:run
 
-3.- Ejecutar Frontend:
+- Ejecutar Frontend:
 
 cd frontend
 npm install && npm run dev
@@ -85,7 +85,7 @@ npm install && npm run dev
 
 ​Una vez que el sistema esté en línea, puede validar la seguridad y el registro con los siguientes comandos:
 
-​1.- Registro de Nuevo Usuario:
+​- Registro de Nuevo Usuario:
 
 curl -X POST http://localhost:8080/users \
      -H "Content-Type: application/json" \
@@ -96,7 +96,7 @@ curl -X POST http://localhost:8080/users \
          }'
 
 
-2.- Inicio de Sesión (Obtención de JWT):
+- Inicio de Sesión (Obtención de JWT):
 
 curl -X POST http://localhost:8080/auth/login \
      -H "Content-Type: application/json" \
