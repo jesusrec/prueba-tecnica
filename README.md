@@ -72,7 +72,8 @@ npm install && npm run dev
 # Flujo de Pruebas de Autenticación (CURL)
 
 ​Una vez que el sistema esté en línea, puede validar la seguridad y el registro con los siguientes comandos:
-​1. Registro de Nuevo Usuario:
+
+​1.- Registro de Nuevo Usuario:
 
 curl -X POST http://localhost:8080/users \
      -H "Content-Type: application/json" \
@@ -82,7 +83,8 @@ curl -X POST http://localhost:8080/users \
            "email": "ramiro@ejemplo.com"
          }'
 
-2. Inicio de Sesión (Obtención de JWT):
+
+2.- Inicio de Sesión (Obtención de JWT):
 
 curl -X POST http://localhost:8080/auth/login \
      -H "Content-Type: application/json" \
@@ -91,9 +93,21 @@ curl -X POST http://localhost:8080/auth/login \
            "password": "password123"
          }'
 
+
 # Comandos Útiles de Administración
 
-• ​Estado de réplicas y servicios: docker stack services app_stack
-• ​Escalar el backend (Alta Disponibilidad): docker service scale app_stack_backend=3
-• ​Logs en tiempo real: docker service logs -f app_stack_backend
-• ​Detener y remover el stack: docker stack rm app_stack
+• ​Estado de réplicas y servicios: 
+
+docker stack services app_stack
+
+• ​Escalar el backend (Alta Disponibilidad): 
+
+docker service scale app_stack_backend=3
+
+• ​Logs en tiempo real: 
+
+docker service logs -f app_stack_backend
+
+• ​Detener y remover el stack: 
+
+docker stack rm app_stack
