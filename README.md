@@ -14,6 +14,7 @@
 ​# Documentación de la API (Swagger)
 ​Para facilitar la revisión técnica, se ha integrado OpenAPI/Swagger. Esta interfaz permite visualizar y probar todos los endpoints disponibles de forma interactiva.
 • ​Swagger UI: http://localhost:8080/swagger-ui/index.html
+
 ​# Guía de Despliegue (Docker Swarm)
 ​Para ejecutar el ecosistema completo bajo orquestación, siga estos pasos desde la raíz del proyecto: 
 
