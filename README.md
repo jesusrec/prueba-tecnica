@@ -1,7 +1,9 @@
 # Prueba Técnica: Fullstack App con Docker Swarm
+
 ​Esta solución representa una arquitectura de microservicios diseñada para entornos de producción, utilizando Spring Boot 3 en el backend, React en el frontend (servido por Nginx) y PostgreSQL para la persistencia de datos. El despliegue está orquestado mediante Docker Swarm, garantizando resiliencia, escalabilidad y balanceo de carga nativo.
 
 ​# Arquitectura del Sistema
+
 ​La solución se basa en un diseño desacoplado que utiliza una red virtual de tipo overlay para la comunicación segura entre servicios:
 
 • ​Capa de Presentación (Frontend): Aplicación SPA (Single Page Application) desarrollada en React. Se utiliza Nginx como servidor web de alto rendimiento para servir los activos estáticos y gestionar el enrutamiento interno.
@@ -12,10 +14,12 @@
 
 
 ​# Documentación de la API (Swagger)
+
 ​Para facilitar la revisión técnica, se ha integrado OpenAPI/Swagger. Esta interfaz permite visualizar y probar todos los endpoints disponibles de forma interactiva.
 • ​Swagger UI: http://localhost:8080/swagger-ui/index.html
 
 ​# Guía de Despliegue (Docker Swarm)
+
 ​Para ejecutar el ecosistema completo bajo orquestación, siga estos pasos desde la raíz del proyecto: 
 
 1.- Inicializar el Clúster (si no está activo):
@@ -32,6 +36,7 @@ docker build -t prueba-tecnica-frontend:latest ./frontend
 docker stack deploy -c docker-compose.yml app_stack
 
 # Pruebas en Entorno de Desarrollo (Local)
+
 ​Si desea ejecutar o depurar los servicios de forma individual fuera de Swarm:
 ​Requisitos Previos
 • ​Java 17+
@@ -55,6 +60,7 @@ npm install && npm run dev
 
 
 # Flujo de Pruebas de Autenticación (CURL)
+
 ​Una vez que el sistema esté en línea, puede validar la seguridad y el registro con los siguientes comandos:
 ​1. Registro de Nuevo Usuario:
 
@@ -76,6 +82,7 @@ curl -X POST http://localhost:8080/auth/login \
          }'
 
 # Comandos Útiles de Administración
+
 • ​Estado de réplicas y servicios: docker stack services app_stack
 • ​Escalar el backend (Alta Disponibilidad): docker service scale app_stack_backend=3
 • ​Logs en tiempo real: docker service logs -f app_stack_backend
