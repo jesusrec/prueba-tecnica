@@ -1,71 +1,81 @@
-# Prueba Técnica: Fullstack App con Docker Swarm 
+# Prueba Técnica: Fullstack App con Docker Swarm
+​Esta solución representa una arquitectura de microservicios diseñada para entornos de producción, utilizando Spring Boot 3 en el backend, React en el frontend (servido por Nginx) y PostgreSQL para la persistencia de datos. El despliegue está orquestado mediante Docker Swarm, garantizando resiliencia, escalabilidad y balanceo de carga nativo.
 
-Esta solución es una plataforma integral diseñada bajo una arquitectura de microservicios, utilizando Spring Boot 3 para el backend, React para el frontend (servido por Nginx) y PostgreSQL como motor de persistencia. El despliegue está orquestado mediante Docker Swarm, garantizando resiliencia y escalabilidad mediante el uso de réplicas y balanceo de carga nativo.
-# Arquitectura del Proyecto
+​# Arquitectura del Sistema
+​La solución se basa en un diseño desacoplado que utiliza una red virtual de tipo overlay para la comunicación segura entre servicios:
 
-La arquitectura se divide en capas desacopladas que se comunican a través de una red virtual interna (overlay):
+• ​Capa de Presentación (Frontend): Aplicación SPA (Single Page Application) desarrollada en React. Se utiliza Nginx como servidor web de alto rendimiento para servir los activos estáticos y gestionar el enrutamiento interno.
+• ​Capa de Negocio (Backend): API REST robusta construida con Java 17 y Spring Boot 3. Implementa seguridad avanzada mediante JSON Web Tokens (JWT).
+• ​Seguridad: Las credenciales de usuario están protegidas mediante el algoritmo de hashing BCrypt, asegurando que la información sensible nunca se almacene en texto plano.
+• ​Persistencia: Instancia de PostgreSQL 15 optimizada, configurada con volúmenes de Docker para garantizar la integridad de los datos ante reinicios de los contenedores.
+• ​Orquestación: Despliegue gestionado por Docker Swarm, lo que permite definir réplicas de los servicios para asegurar la alta disponibilidad.
 
-    Frontend (SPA): Aplicación de página única construida en React, optimizada para una navegación fluida y servida a través de un servidor Nginx.
 
-    Backend: API REST desarrollada en Java 17 con Spring Boot.
+​# Documentación de la API (Swagger)
+​Para facilitar la revisión técnica, se ha integrado OpenAPI/Swagger. Esta interfaz permite visualizar y probar todos los endpoints disponibles de forma interactiva.
+• ​Swagger UI: http://localhost:8080/swagger-ui/index.html
+​# Guía de Despliegue (Docker Swarm)
+​Para ejecutar el ecosistema completo bajo orquestación, siga estos pasos desde la raíz del proyecto: 
 
-    Seguridad y JWT: Se implementó un módulo de autenticación (Login) basado en JSON Web Tokens (JWT). El sistema genera un token seguro tras la validación de credenciales, el cual es requerido para acceder a los recursos protegidos del API.
+1.- Inicializar el Clúster (si no está activo):
+  
+docker swarm init
 
-    Encriptación de Contraseñas: Se utiliza BCrypt para asegurar que las contraseñas nunca se almacenen en texto plano en la base de datos.
+2.- Construir las Imágenes de los Microservicios:
 
-    Orquestación: Uso de Docker Swarm para el manejo de clústeres y alta disponibilidad de los servicios.
+docker build -t prueba-tecnica-backend:latest ./backend
+docker build -t prueba-tecnica-frontend:latest ./frontend
 
-# Documentación de la API (Swagger)
+3.- Desplegar el Stack Completo:
 
-El proyecto cuenta con documentación interactiva generada con OpenAPI/Swagger. Puede probar los endpoints de autenticación y los recursos protegidos directamente desde aquí:
+docker stack deploy -c docker-compose.yml app_stack
 
-    URL de Swagger UI: http://localhost:8080/swagger-ui/index.html
+# Pruebas en Entorno de Desarrollo (Local)
+​Si desea ejecutar o depurar los servicios de forma individual fuera de Swarm:
+​Requisitos Previos
+• ​Java 17+
+• ​Node.js 18+
+• ​Docker (para la base de datos)
+​Pasos para Ejecución Local:
 
-# Instrucciones de Ejecución (Stack Completo)
+1.- Levantar Base de Datos (Docker):
 
-    Inicializar el Clúster:
-    Bash
+docker run --name pg-local -e POSTGRES_PASSWORD=password -p 5432:5432 -d postgres:15-alpine
 
-    docker swarm init
+2.- Ejecutar Backend:
 
-    Construir las Imágenes:
-    Bash
+cd backend
+./mvnw spring-boot:run
 
-    docker build -t prueba-tecnica-backend:latest ./backend
-    docker build -t prueba-tecnica-frontend:latest ./frontend
+3.- Ejecutar Frontend:
 
-    Desplegar el Stack:
-    Bash
+cd frontend
+npm install && npm run dev
 
-    docker stack deploy -c docker-compose.yml app_stack
 
-# Ejecución por Separado y Pruebas
-Registro y Login (Flujo JWT)
+# Flujo de Pruebas de Autenticación (CURL)
+​Una vez que el sistema esté en línea, puede validar la seguridad y el registro con los siguientes comandos:
+​1. Registro de Nuevo Usuario:
 
-Para probar el flujo de seguridad, puede usar los siguientes comandos curl:
-
-1. Registro de usuario:
-Bash
-
-curl -X POST http://localhost:8080/auth/users \
+curl -X POST http://localhost:8080/users \
      -H "Content-Type: application/json" \
-     -d '{"username": "ramiro_admin", "password": "password123", "email": "ramiro@ejemplo.com"}'
+     -d '{
+           "username": "ramiro_dev",
+           "password": "password123",
+           "email": "ramiro@ejemplo.com"
+         }'
 
-2. Login y obtención de Token:
-Bash
+2. Inicio de Sesión (Obtención de JWT):
 
 curl -X POST http://localhost:8080/auth/login \
      -H "Content-Type: application/json" \
-     -d '{"username": "ramiro_admin", "password": "password123"}'
+     -d '{
+           "username": "ramiro_dev",
+           "password": "password123"
+         }'
 
-El API responderá con un token JWT que deberá incluir en las cabeceras de las peticiones protegidas.
-
-# Comandos de Gestión en Swarm
-
-    Estado de servicios: docker stack services app_stack
-
-    Escalar backend: docker service scale app_stack_backend=3
-
-    Logs en tiempo real: docker service logs -f app_stack_backend
-
-    Remover stack: docker stack rm app_stack
+# Comandos Útiles de Administración
+• ​Estado de réplicas y servicios: docker stack services app_stack
+• ​Escalar el backend (Alta Disponibilidad): docker service scale app_stack_backend=3
+• ​Logs en tiempo real: docker service logs -f app_stack_backend
+• ​Detener y remover el stack: docker stack rm app_stack
