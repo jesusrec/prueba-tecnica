@@ -47,7 +47,7 @@ Para probar el flujo de seguridad, puede usar los siguientes comandos curl:
 1. Registro de usuario:
 Bash
 
-curl -X POST http://localhost:8080/auth/register \
+curl -X POST http://localhost:8080/auth/users \
      -H "Content-Type: application/json" \
      -d '{"username": "ramiro_admin", "password": "password123", "email": "ramiro@ejemplo.com"}'
 
