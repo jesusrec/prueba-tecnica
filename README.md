@@ -2,7 +2,7 @@
 
 ​Esta solución representa una arquitectura de microservicios diseñada para entornos de producción, utilizando Spring Boot 3 en el backend, React en el frontend (servido por Nginx) y PostgreSQL para la persistencia de datos. El despliegue está orquestado mediante Docker Swarm, garantizando resiliencia, escalabilidad y balanceo de carga nativo.
 
-​# Arquitectura del Sistema
+​# Arquitectura del sistema
 
 ​La solución se basa en un diseño desacoplado que utiliza una red virtual de tipo overlay para la comunicación segura entre servicios:
 
