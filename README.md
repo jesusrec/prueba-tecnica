@@ -7,15 +7,20 @@
 ​La solución se basa en un diseño desacoplado que utiliza una red virtual de tipo overlay para la comunicación segura entre servicios:
 
 • ​Capa de Presentación (Frontend): Aplicación SPA (Single Page Application) desarrollada en React. Se utiliza Nginx como servidor web de alto rendimiento para servir los activos estáticos y gestionar el enrutamiento interno.
+
 • ​Capa de Negocio (Backend): API REST robusta construida con Java 17 y Spring Boot 3. Implementa seguridad avanzada mediante JSON Web Tokens (JWT).
+
 • ​Seguridad: Las credenciales de usuario están protegidas mediante el algoritmo de hashing BCrypt, asegurando que la información sensible nunca se almacene en texto plano.
+
 • ​Persistencia: Instancia de PostgreSQL 15 optimizada, configurada con volúmenes de Docker para garantizar la integridad de los datos ante reinicios de los contenedores.
+
 • ​Orquestación: Despliegue gestionado por Docker Swarm, lo que permite definir réplicas de los servicios para asegurar la alta disponibilidad.
 
 
 ​# Documentación de la API (Swagger)
 
 ​Para facilitar la revisión técnica, se ha integrado OpenAPI/Swagger. Esta interfaz permite visualizar y probar todos los endpoints disponibles de forma interactiva.
+
 • ​Swagger UI: http://localhost:8080/swagger-ui/index.html
 
 ​# Guía de Despliegue (Docker Swarm)
@@ -38,10 +43,15 @@ docker stack deploy -c docker-compose.yml app_stack
 # Pruebas en Entorno de Desarrollo (Local)
 
 ​Si desea ejecutar o depurar los servicios de forma individual fuera de Swarm:
+
 ​Requisitos Previos
+
 • ​Java 17+
+
 • ​Node.js 18+
+
 • ​Docker (para la base de datos)
+
 ​Pasos para Ejecución Local:
 
 1.- Levantar Base de Datos (Docker):
